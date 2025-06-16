@@ -8,4 +8,8 @@ langchain-pinecone
 langchain_community
 langchain_openai
 langchain_experimental
+sentence-transformers==2.2.2
+huggingface_hub>=0.23.0
+langchain-huggingface==0.0.3  # or latest
 -e .
+
