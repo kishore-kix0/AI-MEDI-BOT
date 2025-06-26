@@ -1,14 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>MediBot Chat</title>
+  <meta charset="UTF-8">
+  <title>Chatbot</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Welcome to MediBot</h1>
-    <form action="/ask" method="POST">
-        <label for="question">Ask your medical question:</label><br>
-        <input type="text" name="question" id="question" size="60">
-        <button type="submit">Ask</button>
+  <div class="chat-container">
+    <header class="chat-header">ChatBot</header>
+    <div class="chat-box" id="chat-box">
+      <!-- Messages will go here -->
+    </div>
+    <form id="chat-form">
+      <input type="text" id="user-input" placeholder="Type a message..." autocomplete="off" required>
+      <button type="submit">Send</button>
     </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("chat-form");
+    const chatBox = document.getElementById("chat-box");
+    const input = document.getElementById("user-input");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
+
+      addMessage("user", userMessage);
+      input.value = "";
+
+      // Simulate bot response
+      setTimeout(() => {
+        const botReply = "You said: " + userMessage;
+        addMessage("bot", botReply);
+      }, 600);
+    });
+
+    function addMessage(sender, message) {
+      const msg = document.createElement("div");
+      msg.className = `message ${sender}`;
+      msg.innerText = message;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
 </body>
 </html>
