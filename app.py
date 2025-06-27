@@ -44,7 +44,7 @@ retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k":
 llm = Together(
     temperature=0.4,
     max_tokens=300,
-    model="togethercomputer/llama-2-7b-chat",
+    model="mistralai/Mistral-7B-Instruct-v0.2",  # ✅ Serverless & Free model
     api_key=TOGETHER_API_KEY
 )
 
@@ -64,10 +64,10 @@ def index():
 @app.route("/get", methods=["POST"])
 def chat():
     msg = request.form["msg"]
-    print("Input:", msg)
+    print("User Input:", msg)  # DEBUG
 
     response = rag_chain.invoke({"input": msg})
-    print("Response:", response["answer"])
+    print("AI Response:", response["answer"])  # DEBUG
 
     return str(response["answer"])
 

@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Chatbot</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <div class="chat-container">
-    <header class="chat-header">ChatBot</header>
+    <header class="chat-header">Chat Maama</header>
+
+    
     <div class="chat-box" id="chat-box">
       <!-- Messages will go here -->
     </div>
@@ -17,33 +19,44 @@
     </form>
   </div>
 
-  <script>
-    const form = document.getElementById("chat-form");
-    const chatBox = document.getElementById("chat-box");
-    const input = document.getElementById("user-input");
+<script>
+  const form = document.getElementById("chat-form");
+  const chatBox = document.getElementById("chat-box");
+  const input = document.getElementById("user-input");
 
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const userMessage = input.value.trim();
-      if (!userMessage) return;
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const userMessage = input.value.trim();
+    if (!userMessage) return;
 
-      addMessage("user", userMessage);
-      input.value = "";
+    addMessage("user", userMessage);
+    input.value = "";
 
-      // Simulate bot response
-      setTimeout(() => {
-        const botReply = "You said: " + userMessage;
-        addMessage("bot", botReply);
-      }, 600);
-    });
+    const formData = new FormData();
+    formData.append("msg", userMessage);
 
-    function addMessage(sender, message) {
-      const msg = document.createElement("div");
-      msg.className = `message ${sender}`;
-      msg.innerText = message;
-      chatBox.appendChild(msg);
-      chatBox.scrollTop = chatBox.scrollHeight;
+    try {
+      const res = await fetch("/get", {
+        method: "POST",
+        body: formData
+      });
+
+      const botReply = await res.text();
+      addMessage("bot", botReply);
+    } catch (err) {
+      addMessage("bot", "⚠️ Error: Could not connect to server.");
     }
-  </script>
+  });
+
+  function addMessage(sender, message) {
+    const msg = document.createElement("div");
+    msg.className = `message ${sender}`;
+    msg.innerText = message;
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+</script>
+
+
 </body>
 </html>
