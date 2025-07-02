@@ -2,5 +2,9 @@
 
 JUST ADD YOUR API KEYS
 1.PINECONE
-2.OPEN API
+2.OPEN API OR TOGETHER API
+
+
+install all the requirements.txt
+pip install -r requirements.txt
  
