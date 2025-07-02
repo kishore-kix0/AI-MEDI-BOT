@@ -1,1 +1,6 @@
 # medical-chatbot-AI
+
+JUST ADD YOUR API KEYS
+1.PINECONE
+2.OPEN API
+ 
